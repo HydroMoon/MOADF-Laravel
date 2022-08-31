@@ -1,3 +1,6 @@
+# Args for interactive start.sh
+ARG VERSION=${PHP_VERSION}
+
 FROM composer:2.4.1 as vendor
 ## Stage 1
 RUN mkdir -p /var/app
@@ -14,9 +17,6 @@ RUN composer install \
     --prefer-dist
 
 # Stage 1 finished
-
-# Args for interactive start.sh
-ARG VERSION=${PHP_VERSION}
 
 FROM hydromoon/laravel-base:${VERSION} as main
 # Choose which webserver you want (nginx | apache) default is nginx
