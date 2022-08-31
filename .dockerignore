@@ -1,0 +1,10 @@
+*.md
+!README*.md
+README-secret.md
+.gitignore
+vendor
+node_modules
+.env
+Dockerfile
+docker-compose.yml
+Dockerfile.laravel
