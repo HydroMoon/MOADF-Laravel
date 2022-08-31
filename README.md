@@ -13,6 +13,8 @@ Download and run
 ```bash
   # Follow the interactive shell instruction and you will be all good
   wget -O - https://github.com/HydroMoon/MOADF-Laravel/releases/download/1.0.0/start.sh | bash
+  # CURL
+  curl -s https://github.com/HydroMoon/MOADF-Laravel/releases/download/1.0.0/start.sh | bash
 ```
 
 ## How to use
