@@ -3,8 +3,8 @@
 function baseimage
 {
     echo -e '\033[0;33m'"Base image selection:"
-    echo -e '\033[0;32m'"\n a) PHP8.1-FPM"
-    echo -e " b) PHP7.4-FPM"'\033[0m'
+    echo -e '\033[0;32m'"\n 1) PHP8.1-FPM"
+    echo -e " 2) PHP7.4-FPM"'\033[0m'
     echo -e "\n"
     read -p "Your choice: " php_version
 }
@@ -12,8 +12,8 @@ function baseimage
 function webserverchoice
 {
     echo -e '\033[0;33m'"Web server selection: (Both have PHP-FPM enabled)"
-    echo -e '\033[0;32m'"\n a) NGINX"
-    echo -e " b) Apache"'\033[0m'
+    echo -e '\033[0;32m'"\n 1) NGINX"
+    echo -e " 2) Apache"'\033[0m'
     echo -e "\n"
     read -p "Your choice: " webserver
 }
@@ -44,12 +44,12 @@ echo -e "\nLanching interactive shell\n"
 baseimage
 filename=Dockerfile.laravel
 case $php_version in
-  a)
+  1)
     echo -e "You selected: PHP8.1-FPM"
     php_version="php8.1-1.0.0"
     ;;
 
-  b)
+  2)
     echo -e "You selected: PHP7.4-FPM"
     php_version="php7.4-1.0.0"
     ;;
@@ -63,12 +63,12 @@ webserverchoice
 
 case $webserver in
 
-  a)
+  1)
     echo -e "You selected: NGINX"
     webserver="nginx"
     ;;
 
-  b)
+  2)
     echo -e "You selected: Apache"
     webserver="apache"
     ;;
