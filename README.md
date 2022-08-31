@@ -3,18 +3,16 @@
 
 Mother Of All Dockerfiles for Laravel PHP framework made by Qasim Nouh
 
-
-
-
 ## Installation
 
 Download and run
 
 ```bash
   # Follow the interactive shell instruction and you will be all good
-  wget -O - https://github.com/HydroMoon/MOADF-Laravel/releases/download/1.0.0/start.sh | bash
-  # CURL
-  curl -s -L https://github.com/HydroMoon/MOADF-Laravel/releases/download/1.0.0/start.sh | bash
+  # wget
+  bash <(wget -O - https://github.com/HydroMoon/MOADF-Laravel/releases/download/1.0.0/start.sh)
+  # cURL
+  bash <(curl -s -L https://github.com/HydroMoon/MOADF-Laravel/releases/download/1.0.0/start.sh)
 ```
 
 ## How to use
