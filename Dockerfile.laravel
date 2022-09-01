@@ -27,11 +27,17 @@ COPY moadf/prepare /prepare/
 RUN chmod +x /prepare/setup.sh && /prepare/setup.sh  && rm /prepare/setup.sh
 
 # Adding daemonized apps (nginx & php-fpm)
-RUN mkdir /etc/service/${WEB_SERVER} /etc/service/php /etc/service/laravel
+RUN mkdir /etc/service/${WEB_SERVER} \
+           /etc/service/php \
+           /etc/service/laravel
+
 COPY moadf/daemons/${WEB_SERVER} /etc/service/${WEB_SERVER}/run
 COPY moadf/daemons/php /etc/service/php/run
 COPY moadf/daemons/laravel /etc/service/laravel/run
-RUN chmod +x /etc/service/${WEB_SERVER}/run /etc/service/php/run /etc/service/laravel/run
+
+RUN chmod +x /etc/service/${WEB_SERVER}/run \
+             /etc/service/php/run \
+             /etc/service/laravel/run
 
 # Adding startup script
 RUN mkdir -p /etc/my_init.d
