@@ -35,6 +35,7 @@ echo -e '\033[0;34m'"Make sure you Docker BUILD_KIT is enabled for the best pere
 
 echo -e "Cloning from repo..."
 git clone -q https://github.com/HydroMoon/MOADF-Laravel.git
+rm -rf MOADF-Laravel/.git MOADF-Laravel/README.md 
 mv MOADF-Laravel/* ./
 rm -rf MOADF-Laravel
 
