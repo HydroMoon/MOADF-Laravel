@@ -1,8 +1,8 @@
 #!/bin/sh
 # Startup script for optimizing and setting up laravel
 cd /var/app
-# php artisan key:generate
-php artisan clear-compiled 
-composer dump-autoload
-php artisan storage:link
-php artisan optimize
+artisan key:generate
+artisan clear-compiled
+COMPOSER_HOME=/var/composer/.composer composer dump-autoload
+artisan storage:link
+# artisan optimize

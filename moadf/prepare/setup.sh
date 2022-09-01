@@ -1,4 +1,7 @@
 #!/bin/sh
+# Copy artisan script to /usr/local/bin
+mv /prepare/artisan.sh /usr/local/bin/artisan
+chmod +x /usr/local/bin/artisan
 # Prepare web server config according to build args
 if [ $WEB_SERVER = "nginx" ]; then
 install_clean nginx
