@@ -8,8 +8,8 @@ WORKDIR /var/app
 
 # Copying composer.json & composer.lock
 COPY composer.json composer.lock /var/app/
-
-RUN composer install \
+# Just in case composer run out of memory
+RUN COMPOSER_MEMORY_LIMIT=-1 composer install \
     --ignore-platform-reqs \
     --no-interaction \
     --no-plugins \
