@@ -1,10 +1,6 @@
 #!/bin/sh
 # Copy sshd_config file
 mv /prepare/ssh_config/sshd_config /etc/ssh/sshd_config
-# Add env varriables
-echo /tmp > /etc/container_environment/COMPOSER_HOME
-echo -1 > /etc/container_environment/COMPOSER_MEMORY_LIMIT
-source /etc/container_environment.sh
 # Copy artisan script to /usr/local/bin
 mv /prepare/artisan.sh /usr/local/bin/artisan
 mv /prepare/composer.sh /usr/local/bin/composer
