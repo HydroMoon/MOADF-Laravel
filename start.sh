@@ -18,6 +18,16 @@ function webserverchoice
     read -p "Your choice: " webserver
 }
 
+function composerversionchoice
+{
+    echo -e '\033[0;33m'"Composer version selection:"
+    echo -e '\033[0;32m'"\n 1) Composer 2.4.1"
+    echo -e " 2) Composer 2"'\033[0m'
+    echo -e " 2) Composer 1.10.26"'\033[0m'
+    echo -e "\n"
+    read -p "Your choice: " composerversion
+}
+
 echo -e '\033[0;34m
  _______  _______  _______  ______   _______ 
 (       )(  ___  )(  ___  )(  __  \ (  ____ \
@@ -78,9 +88,32 @@ case $webserver in
     webserverchoice
     ;;
 esac
+composerversionchoice
+
+case $composerversion in
+
+  1)
+    echo -e "You selected: Composer version 2.4.1"
+    composerversion="2.4.1"
+    ;;
+
+  2)
+    echo -e "You selected: Composer version 2"
+    composerversion="2"
+    ;;
+  
+  3)
+    echo -e "You selected: Composer version 1.10.26"
+    composerversion="1.10.26"
+    ;;
+
+  *)
+    composerversionchoice
+    ;;
+esac
 
 echo -e "\nConfiguring Dockerfile for you..."
-php start.php $php_version $webserver
+php start.php $php_version $webserver $composerversion
 
 rm start.php start.sh
 

@@ -1,7 +1,11 @@
 #!/bin/sh
+# Add env varriables
+echo /tmp > /etc/container_environment/COMPOSER_HOME
+echo -1 > /etc/container_environment/COMPOSER_MEMORY_LIMIT
 # Copy artisan script to /usr/local/bin
 mv /prepare/artisan.sh /usr/local/bin/artisan
-chmod +x /usr/local/bin/artisan
+mv /prepare/composer.sh /usr/local/bin/composer
+chmod +x /usr/local/bin/artisan /usr/local/bin/composer
 # Copy php config files
 mv /prepare/php.config.ini /usr/local/etc/php/conf.d/php.config.ini
 # Prepare web server config according to build args
