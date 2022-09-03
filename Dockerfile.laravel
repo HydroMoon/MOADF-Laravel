@@ -27,7 +27,7 @@ ARG WEB_SERVER=${WEB_SERVER}
 COPY moadf/prepare /prepare/
 RUN chmod +x /prepare/setup.sh && /prepare/setup.sh  && rm /prepare/setup.sh
 
-# Adding daemonized apps (nginx & php-fpm)
+# Adding daemonized apps (nginx & php-fpm & laravel queue)
 RUN mkdir /etc/service/${WEB_SERVER} \
            /etc/service/php \
            /etc/service/laravel
@@ -36,15 +36,12 @@ COPY moadf/daemons/${WEB_SERVER} /etc/service/${WEB_SERVER}/run
 COPY moadf/daemons/php /etc/service/php/run
 COPY moadf/daemons/laravel /etc/service/laravel/run
 
-RUN chmod +x /etc/service/${WEB_SERVER}/run \
-             /etc/service/php/run \
-             /etc/service/laravel/run
+RUN find /etc/service/ -type f -name "run" -exec chmod +x {} \;
 
 # Adding startup script
 RUN mkdir -p /etc/my_init.d
 COPY moadf/startup/ /etc/my_init.d/
-RUN chmod +x /etc/my_init.d/artisan.sh /etc/my_init.d/00-export-variables.sh
-
+RUN chmod +x /etc/my_init.d/*.sh
 
 # Adding cron jobs
 COPY moadf/cron/ /etc/cron.d/
