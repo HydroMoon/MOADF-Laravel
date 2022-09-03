@@ -22,8 +22,8 @@ function composerversionchoice
 {
     echo -e '\033[0;33m'"Composer version selection:"
     echo -e '\033[0;32m'"\n 1) Composer 2.4.1"
-    echo -e " 2) Composer 2"'\033[0m'
-    echo -e " 2) Composer 1.10.26"'\033[0m'
+    echo -e " 2) Composer 2"
+    echo -e " 3) Composer 1.10.26"'\033[0m'
     echo -e "\n"
     read -p "Your choice: " composerversion
 }
