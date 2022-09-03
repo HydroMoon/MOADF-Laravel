@@ -1,12 +1,12 @@
 # Args for interactive start.sh
 ARG VERSION=${PHP_VERSION}
-ARG COMPOSER=${COMPOSER_VERSION}
 
 FROM hydromoon/laravel-base:${VERSION} as vendor
+ENV COMPOSER_VER=${COMPOSER_VERSION}
 ## Stage 1
 RUN mkdir -p /var/app
 WORKDIR /var/app
-RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --version=${COMPOSER} --install-dir=/usr/bin/ --filename=composer
+RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --version=${COMPOSER_VER} --install-dir=/usr/bin/ --filename=composer
 # Copying composer.json & composer.lock
 COPY composer.json composer.lock /var/app/
 # Just in case composer run out of memory

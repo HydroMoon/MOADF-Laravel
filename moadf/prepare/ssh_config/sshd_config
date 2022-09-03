@@ -1,0 +1,22 @@
+# Keep in mind this image uses open-ssh
+Port 			2222
+ListenAddress 		0.0.0.0
+LoginGraceTime 		180
+X11Forwarding 		yes
+StrictModes 		yes
+SyslogFacility AUTHPRIV
+# PasswordAuthentication 	yes
+PermitEmptyPasswords 	no
+PermitRootLogin 	yes
+Subsystem	sftp	/usr/lib/openssh/sftp-server
+
+
+# Disable legacy (protocol version 1) support in the server for new
+# installations. In future the default will change to require explicit
+# activation of protocol 1
+Protocol 2
+
+# Change to no to disable s/key passwords
+# Disabled for passenger-docker. We only allow key authentication.
+ChallengeResponseAuthentication no
+

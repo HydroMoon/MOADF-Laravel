@@ -1,13 +1,17 @@
 #!/bin/sh
+# Copy sshd_config file
+mv /prepare/ssh_config/sshd_config /etc/ssh/sshd_config
 # Add env varriables
 echo /tmp > /etc/container_environment/COMPOSER_HOME
 echo -1 > /etc/container_environment/COMPOSER_MEMORY_LIMIT
+source /etc/container_environment.sh
 # Copy artisan script to /usr/local/bin
 mv /prepare/artisan.sh /usr/local/bin/artisan
 mv /prepare/composer.sh /usr/local/bin/composer
 chmod +x /usr/local/bin/artisan /usr/local/bin/composer
-# Copy php config files
-mv /prepare/php.config.ini /usr/local/etc/php/conf.d/php.config.ini
+# Copy php config files & php fpm pool setting if needed
+mv /prepare/php/php.config.ini /usr/local/etc/php/conf.d/php.config.ini
+# mv /prepare/php/php.pool.ini /usr/local/etc/php-fpm.d/php.pool.ini
 # Prepare web server config according to build args
 if [ $WEB_SERVER = "nginx" ]; then
 install_clean nginx
