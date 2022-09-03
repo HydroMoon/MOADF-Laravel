@@ -47,6 +47,7 @@ echo -e "Cloning from repo..."
 git clone -q https://github.com/HydroMoon/MOADF-Laravel.git
 rm -rf MOADF-Laravel/.git MOADF-Laravel/README.md 
 mv MOADF-Laravel/* ./
+mv MOADF-Laravel/.dockerignore ./.dockerignore
 rm -rf MOADF-Laravel
 
 echo -e "Done cloning"
