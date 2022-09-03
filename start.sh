@@ -4,6 +4,7 @@ function baseimage
 {
     echo -e '\033[0;33m'"Base image selection:"
     echo -e '\033[0;32m'"\n 1) PHP8.1-FPM"
+    echo -e " 2) PHP8.0-FPM"
     echo -e " 2) PHP7.4-FPM"'\033[0m'
     echo -e "\n"
     read -p "Your choice: " php_version
@@ -20,6 +21,8 @@ function webserverchoice
 
 function composerversionchoice
 {
+    echo -e '\033[0;34m'"Its is recommended to use the latest version of composer as it is proven to be blazing fast when installing/updating dependencies"
+    echo -e '\033[0;34m'"Unless it is requisite to use the old version by a dependency just *Do not use it*"
     echo -e '\033[0;33m'"Composer version selection:"
     echo -e '\033[0;32m'"\n 1) Composer 2.4.1"
     echo -e " 2) Composer 2"
@@ -62,6 +65,11 @@ case $php_version in
     ;;
 
   2)
+    echo -e "You selected: PHP8.0-FPM"
+    php_version="php-8.0"
+    ;;
+
+  3)
     echo -e "You selected: PHP7.4-FPM"
     php_version="php-7.4"
     ;;
