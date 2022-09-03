@@ -7,7 +7,7 @@ mv /prepare/composer.sh /usr/local/bin/composer
 chmod +x /usr/local/bin/artisan /usr/local/bin/composer
 # Copy php config files & php fpm pool setting if needed
 mv /prepare/php/php.config.ini /usr/local/etc/php/conf.d/php.config.ini
-# mv /prepare/php/php.pool.ini /usr/local/etc/php-fpm.d/php.pool.ini
+# mv /prepare/php/php.pool.conf /usr/local/etc/php-fpm.d/php.pool.conf
 # Prepare web server config according to build args
 if [ $WEB_SERVER = "nginx" ]; then
 install_clean nginx
