@@ -2,6 +2,8 @@
 # Copy artisan script to /usr/local/bin
 mv /prepare/artisan.sh /usr/local/bin/artisan
 chmod +x /usr/local/bin/artisan
+# Copy php config files
+mv /prepare/php.config.ini /usr/local/etc/php/conf.d/php.config.ini
 # Prepare web server config according to build args
 if [ $WEB_SERVER = "nginx" ]; then
 install_clean nginx

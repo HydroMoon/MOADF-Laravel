@@ -47,12 +47,12 @@ filename=Dockerfile.laravel
 case $php_version in
   1)
     echo -e "You selected: PHP8.1-FPM"
-    php_version="php-8.1-1.0.0"
+    php_version="php-8.1"
     ;;
 
   2)
     echo -e "You selected: PHP7.4-FPM"
-    php_version="php-7.4-1.0.0"
+    php_version="php-7.4"
     ;;
 
   *)
