@@ -23,20 +23,11 @@ FROM hydromoon/laravel-base:${VERSION} as main
 # Choose which webserver you want (nginx | apache) default is nginx
 ARG WEB_SERVER=${WEB_SERVER}
 
-# Prepare webserver configurations
+# Prepare webserver configurations & Daemonized apps (nginx & php-fpm & laravel queue)
 COPY moadf/prepare /prepare/
-RUN chmod +x /prepare/setup.sh && /prepare/setup.sh  && rm /prepare/setup.sh
+COPY moadf/daemons /daemons/
 
-# Adding daemonized apps (nginx & php-fpm & laravel queue)
-RUN mkdir /etc/service/${WEB_SERVER} \
-           /etc/service/php \
-           /etc/service/laravel
-
-COPY moadf/daemons/${WEB_SERVER} /etc/service/${WEB_SERVER}/run
-COPY moadf/daemons/php /etc/service/php/run
-COPY moadf/daemons/laravel /etc/service/laravel/run
-
-RUN find /etc/service/ -type f -name "run" -exec chmod +x {} \;
+RUN chmod +x /prepare/setup.sh && /prepare/setup.sh && rm /prepare/setup.sh
 
 # Adding startup script
 RUN mkdir -p /etc/my_init.d
@@ -51,17 +42,19 @@ COPY moadf/cron/ /etc/cron.d/
 # COPY ssh/my_key.pub /tmp/my_key.pub
 # RUN cat /tmp/my_key.pub >> /root/.ssh/authorized_keys && rm -f /tmp/my_key.pub
 
-FROM main
+FROM main as final
 
 WORKDIR /var/app
 
 # Add users if needed
 # RUN useradd -m -s /bin/bash qasim
 
+# Copy composer as different name because
+# will use other script to call composer with the right user
 COPY --from=vendor /usr/bin/composer /usr/bin/ncomposer
 COPY --chown=www-data:www-data --from=vendor /var/app/vendor /var/app/vendor
 COPY --chown=www-data:www-data . /var/app/
 # Remove on production
 RUN mv .env.example .env
-
-EXPOSE 80 2222
+# Expose sshd port if enabled (Port 2222)
+EXPOSE 80

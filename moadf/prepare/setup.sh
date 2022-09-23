@@ -1,13 +1,28 @@
 #!/bin/sh
+
 # Copy sshd_config file
 mv /prepare/ssh_config/sshd_config /etc/ssh/sshd_config
-# Copy artisan script to /usr/local/bin
+
+# Preparing daemonized apps
+mkdir /etc/service/${WEB_SERVER} \
+    /etc/service/php \
+    /etc/service/laravel
+# Copy needed file to run the daemons
+cp /daemons/${WEB_SERVER} /etc/service/${WEB_SERVER}/run
+cp /daemons/php /etc/service/php/run
+cp /daemons/laravel /etc/service/laravel/run
+# Make them executables
+find /etc/service/ -type f -name "run" -exec chmod +x {} \;
+
+# Copy artisan & composer script to /usr/local/bin
 mv /prepare/artisan.sh /usr/local/bin/artisan
 mv /prepare/composer.sh /usr/local/bin/composer
 chmod +x /usr/local/bin/artisan /usr/local/bin/composer
+
 # Copy php config files & php fpm pool setting if needed
 mv /prepare/php/php.config.ini /usr/local/etc/php/conf.d/php.config.ini
 # mv /prepare/php/php.pool.conf /usr/local/etc/php-fpm.d/z-php.pool.conf
+
 # Prepare web server config according to build args
 if [ $WEB_SERVER = "nginx" ]; then
 install_clean nginx
