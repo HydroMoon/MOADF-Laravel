@@ -1,4 +1,5 @@
 #!/bin/sh
+sv start php || exit 1
 # Choose laravel queue or horizon
 exec /sbin/setuser www-data /usr/local/bin/php /var/app/artisan queue:work --sleep=3 --tries=3 --daemon
 # exec /sbin/setuser www-data /usr/local/bin/php /var/app/artisan horizon
