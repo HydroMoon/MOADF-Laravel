@@ -5,7 +5,7 @@ function baseimage
     echo -e '\033[0;33m'"Base image selection:"
     echo -e '\033[0;32m'"\n 1) PHP8.1-FPM"
     echo -e " 2) PHP8.0-FPM"
-    echo -e " 2) PHP7.4-FPM"'\033[0m'
+    echo -e " 3) PHP7.4-FPM"'\033[0m'
     echo -e "\n"
     read -p "Your choice: " php_version
 }
