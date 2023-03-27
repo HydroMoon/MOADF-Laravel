@@ -1,0 +1,9 @@
+#!/bin/sh
+sv start php || exit 1
+crontab /etc/cron.d/laravel-schedule
+cd /var/app
+composer dumpautoload -o
+artisan storage:link
+artisan migrate --force
+touch /etc/service/startup/down
+sv down startup

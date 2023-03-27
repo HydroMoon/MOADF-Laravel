@@ -6,11 +6,15 @@ mv /prepare/ssh_config/sshd_config /etc/ssh/sshd_config
 # Preparing daemonized apps
 mkdir /etc/service/${WEB_SERVER} \
     /etc/service/php \
-    /etc/service/laravel
+    /etc/service/laravel \
+    /etc/service/startup
+
 # Copy needed file to run the daemons
 cp /daemons/${WEB_SERVER} /etc/service/${WEB_SERVER}/run
 cp /daemons/php /etc/service/php/run
 cp /daemons/laravel /etc/service/laravel/run
+cp /daemons/startup /etc/service/startup/run
+
 # Make them executables
 find /etc/service/ -type f -name "run" -exec chmod +x {} \;
 
@@ -36,3 +40,9 @@ a2enmod actions
 a2enmod rewrite
 a2enmod proxy_fcgi
 fi
+
+mkdir -p /var/app/storage/logs
+mkdir -p /var/app/storage/app
+chgrp -R 33 /var/app/storage
+chmod -R ug+rwx /var/app/storage
+chmod -R 777 /var/app/storage
