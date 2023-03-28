@@ -5,6 +5,7 @@ README-secret.md
 vendor
 node_modules
 .env
+.env.development
 Dockerfile
 docker-compose.yml
 Dockerfile.laravel

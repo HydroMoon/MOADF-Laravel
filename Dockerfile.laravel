@@ -1,24 +1,6 @@
 # Args for interactive start.sh
 ARG VERSION=${PHP_VERSION}
 
-FROM hydromoon/laravel-base:${VERSION} as vendor
-ENV COMPOSER_VER=${COMPOSER_VERSION}
-## Stage 1
-RUN mkdir -p /var/app
-WORKDIR /var/app
-RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --version=${COMPOSER_VER} --install-dir=/usr/bin/ --filename=composer
-# Copying composer.json & composer.lock
-COPY composer.json composer.lock /var/app/
-# Just in case composer run out of memory
-RUN COMPOSER_MEMORY_LIMIT=-1 composer install \
-    --ignore-platform-reqs \
-    --no-interaction \
-    --no-plugins \
-    --no-scripts \
-    --prefer-dist
-
-# Stage 1 finished
-
 FROM hydromoon/laravel-base:${VERSION} as main
 # Choose which webserver you want (nginx | apache) default is nginx
 ARG WEB_SERVER=${WEB_SERVER}
@@ -43,16 +25,15 @@ COPY moadf/cron/ /etc/cron.d/
 # RUN cat /tmp/my_key.pub >> /root/.ssh/authorized_keys && rm -f /tmp/my_key.pub
 
 FROM main as final
-
+ENV COMPOSER_VER=${COMPOSER_VERSION}
 WORKDIR /var/app
 
 # Add users if needed
-# RUN useradd -m -s /bin/bash qasim
+RUN useradd -m -s /bin/bash dev
 
 # Copy composer as different name because
 # will use other script to call composer with the right user
-COPY --from=vendor /usr/bin/composer /usr/bin/ncomposer
-COPY --chown=www-data:www-data --from=vendor /var/app/vendor /var/app/vendor
+RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --version=${COMPOSER_VER} --install-dir=/usr/bin/ --filename=composer
 COPY --chown=www-data:www-data . /var/app/
 # Remove on production
 RUN mv .env.example .env

@@ -1,0 +1,62 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile.laravel
+    image: ${APP_NAME}
+    container_name: ${APP_NAME}-app
+    restart: unless-stopped
+    ports:
+      - 8015:80
+    working_dir: /var/app
+    volumes:
+      - ./:/var/app
+    networks:
+      - default
+
+  db:
+    image: mysql:8
+    container_name: ${APP_NAME}-db
+    restart: unless-stopped
+    ports:
+      - 3310:3306
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "R${APP_NAME}@pswd"
+      MYSQL_DATABASE: ${APP_NAME}-db
+      MYSQL_USER: ${APP_NAME}-usr
+      MYSQL_PASSWORD: "${APP_NAME}@pswd"
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    networks:
+      - default
+
+  # mongodb:
+  #   image: mongo
+  #   container_name: ${APP_NAME}-mongodb
+  #   restart: unless-stopped
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=root
+  #     - MONGO_INITDB_ROOT_PASSWORD=MoNGoDB123
+  #   volumes:
+  #     - ./data/mongo:/data/db
+  #   ports:
+  #     - 27020:27017
+  #   networks:
+  #     - default
+
+  # redis:
+  #   image: redis:latest
+  #   container_name: ${APP_NAME}-redis
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./data/redis:/var/lib/redis
+  #   command: redis-server --appendonly yes --requirepass "ReDiS123"
+  #   networks:
+  #     - default
+
+networks:
+  default:
+    name: ${APP_NAME}-network
+    driver: bridge

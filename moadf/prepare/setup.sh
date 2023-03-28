@@ -19,13 +19,19 @@ cp /daemons/startup /etc/service/startup/run
 find /etc/service/ -type f -name "run" -exec chmod +x {} \;
 
 # Copy artisan & composer script to /usr/local/bin
-mv /prepare/artisan.sh /usr/local/bin/artisan
-mv /prepare/composer.sh /usr/local/bin/composer
-chmod +x /usr/local/bin/artisan /usr/local/bin/composer
+# mv /prepare/artisan.sh /usr/local/bin/artisan
+# mv /prepare/composer.sh /usr/local/bin/composer
+# chmod +x /usr/local/bin/artisan /usr/local/bin/composer
 
 # Copy php config files & php fpm pool setting if needed
 mv /prepare/php/php.config.ini /usr/local/etc/php/conf.d/php.config.ini
 mv /prepare/php/php.pool.conf /usr/local/etc/php-fpm.d/z-php.pool.conf
+
+# Add sudo and allow to run it without password
+install_clean sudo
+echo "dev ALL=(ALL:ALL) NOPASSWD: ALL" | tee "/etc/sudoers.d/dont-prompt-dev-for-sudo-password"
+# Disable php opcache for developement
+sed -i 's/opcache.enable=1/opcache.enable=0/g' /usr/local/etc/php/conf.d/opcache.ini
 
 # Prepare web server config according to build args
 if [ $WEB_SERVER = "nginx" ]; then
