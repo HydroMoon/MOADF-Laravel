@@ -19,6 +19,16 @@ Download and run start.sh to setup files correctly
 
 If you have any other configuration needed you can add to the dockerfile or prepare.sh if you want to install other packages needed by laravel packages etc...
 
+To run development environment
+
+```bash
+  # docker-compose or docker compose
+  docker compose up -d
+```
+
+## How to use
+
+If you have database SQL dump you can add it inside ./moadf/mysql and it will auto import to db upon firing mysql server.
 
 ## Cron jobs
 

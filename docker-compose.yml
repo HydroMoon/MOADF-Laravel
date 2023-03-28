@@ -23,6 +23,7 @@ services:
       - 3310:3306
     volumes:
       - ./data/mysql:/var/lib/mysql
+      - ./moadf/mysql:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: "R${APP_NAME}@pswd"
       MYSQL_DATABASE: ${APP_NAME}-db
