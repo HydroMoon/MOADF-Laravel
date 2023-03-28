@@ -1,11 +1,11 @@
 
 # MOADF - Laravel <3
 
-Mother Of All Dockerfiles for Laravel PHP framework made by Qasim Nouh
+Mother Of All Dockerfiles for Laravel PHP framework made by Qasim Nouh (For developement env - Docker Compose)
 
 ## Installation
 
-Download and run
+Download and run start.sh to setup files correctly
 
 ```bash
   # Follow the interactive shell instruction and you will be all good
