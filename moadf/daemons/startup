@@ -2,6 +2,7 @@
 sv start php || exit 1
 crontab /etc/cron.d/laravel-schedule
 cd /var/app
+composer install
 composer dumpautoload -o
 artisan storage:link
 artisan migrate --force

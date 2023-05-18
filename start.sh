@@ -47,7 +47,7 @@ echo -e '\033[0;33m' "   Qasim Nouh - https://qasimnouh.com\n" '\033[0m'
 echo -e '\033[0;34m'"Make sure you Docker BUILD_KIT is enabled for the best pereformance\n"'\033[0m'
 
 echo -e "Cloning from repo..."
-git clone -q https://github.com/HydroMoon/MOADF-Laravel.git
+git clone -q -b dev-env https://github.com/HydroMoon/MOADF-Laravel.git
 rm -rf MOADF-Laravel/.git MOADF-Laravel/README.md 
 mv MOADF-Laravel/* ./
 mv MOADF-Laravel/.dockerignore ./.dockerignore
