@@ -10,9 +10,9 @@ Download and run start.sh to setup files correctly
 ```bash
   # Follow the interactive shell instruction and you will be all good
   # wget
-  bash <(wget -O - https://github.com/HydroMoon/MOADF-Laravel/releases/download/1.0.0/start.sh)
+  bash <(wget -O - https://github.com/HydroMoon/MOADF-Laravel/releases/download/1.0.0-dev/start.sh)
   # cURL
-  bash <(curl -s -L https://github.com/HydroMoon/MOADF-Laravel/releases/download/1.0.0/start.sh)
+  bash <(curl -s -L https://github.com/HydroMoon/MOADF-Laravel/releases/download/1.0.0-dev/start.sh)
 ```
 
 ## How to use
