@@ -29,7 +29,7 @@ mv /prepare/php/php.pool.conf /usr/local/etc/php-fpm.d/z-php.pool.conf
 
 # Add sudo and allow to run it without password
 install_clean sudo
-echo "dev ALL=(ALL:ALL) NOPASSWD: ALL" | tee "/etc/sudoers.d/dont-prompt-dev-for-sudo-password"
+echo "$user ALL=(ALL:ALL) NOPASSWD: ALL" | tee "/etc/sudoers.d/dont-prompt-$user-for-sudo-password"
 # Disable php opcache for developement
 sed -i 's/opcache.enable=1/opcache.enable=0/g' /usr/local/etc/php/conf.d/opcache.ini
 

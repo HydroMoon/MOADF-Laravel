@@ -1,5 +1,7 @@
 # Args for interactive start.sh
 ARG VERSION=${PHP_VERSION}
+ARG user
+ARG uid
 
 FROM hydromoon/laravel-base:${VERSION} as main
 # Choose which webserver you want (nginx | apache) default is nginx
@@ -29,7 +31,10 @@ ENV COMPOSER_VER=${COMPOSER_VERSION}
 WORKDIR /var/app
 
 # Add users if needed
-RUN useradd -m -s /bin/bash dev
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer && \
+    chown -R $user:$user /home/$user && \
+    chown -R www-data:www-data /var/www
 
 # Copy composer as different name because
 # will use other script to call composer with the right user
@@ -38,4 +43,4 @@ COPY --chown=www-data:www-data . /var/app/
 # Remove on production
 RUN mv .env.example .env
 # Expose sshd port if enabled (Port 2222)
-EXPOSE 80
+EXPOSE 80 443
