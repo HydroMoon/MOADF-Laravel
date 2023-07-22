@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Add ssh password for (Azure App Service Only)
+# echo 'root:Docker!' | chpasswd
+
 # Copy sshd_config file
 mv /prepare/ssh_config/sshd_config /etc/ssh/sshd_config
 

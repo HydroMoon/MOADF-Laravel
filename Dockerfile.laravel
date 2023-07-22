@@ -18,11 +18,14 @@ RUN mkdir -p /etc/my_init.d
 COPY moadf/startup/ /etc/my_init.d/
 RUN chmod +x /etc/my_init.d/*.sh
 
+COPY moadf/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # Adding cron jobs
 COPY moadf/cron/ /etc/cron.d/
 
 # Enabling ssh and adding out key
-# RUN rm -f /etc/service/sshd/down
+RUN rm -f /etc/service/sshd/down
 # COPY ssh/my_key.pub /tmp/my_key.pub
 # RUN cat /tmp/my_key.pub >> /root/.ssh/authorized_keys && rm -f /tmp/my_key.pub
 
@@ -44,3 +47,7 @@ COPY --chown=www-data:www-data . /var/app/
 RUN mv .env.example .env
 # Expose sshd port if enabled (Port 2222)
 EXPOSE 80 443
+
+USER $user
+
+ENTRYPOINT [ "/entrypoint.sh" ]
