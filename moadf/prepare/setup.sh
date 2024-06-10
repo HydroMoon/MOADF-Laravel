@@ -59,3 +59,7 @@ mkdir -p /var/app/storage/app
 chgrp -R 33 /var/app/storage
 chmod -R ug+rwx /var/app/storage
 chmod -R 777 /var/app/storage
+
+# Add some env vars
+echo "export ENABLE_CRON=$ENABLE_CRON" >> /etc/profile
+echo "export INSTALL_NODE=$INSTALL_NODE" >> /etc/profile

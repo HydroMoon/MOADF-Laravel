@@ -20,11 +20,10 @@ RUN COMPOSER_MEMORY_LIMIT=-1 composer install \
 # Stage 1 finished
 
 FROM hydromoon/laravel-base:${VERSION} as main
-# Choose which webserver you want (nginx | apache) default is nginx
-ARG WEB_SERVER=${WEB_SERVER}
+# Modify settings
+ARG ENABLE_CRON=true
 ARG INSTALL_NODE=true
 ARG INSTALL_NODE_VERSION=18
-ARG ENABLE_CRON=true
 
 # Prepare webserver configurations & Daemonized apps (nginx & php-fpm & laravel queue)
 COPY moadf/prepare /prepare/
@@ -35,6 +34,12 @@ RUN chmod +x /prepare/setup.sh && /prepare/setup.sh && rm /prepare/setup.sh
 RUN mkdir -p /etc/my_init.d
 COPY moadf/startup/ /etc/my_init.d/
 RUN chmod +x /etc/my_init.d/*.sh
+
+# Frontend build and compilation
+# FROM node:18.19.1-bookworm-slim as builder
+# WORKDIR /var/www/app
+# COPY . /var/www/app/
+# RUN npm install && npm run build
 
 FROM main as final
 
@@ -48,6 +53,9 @@ WORKDIR /var/app
 COPY --from=vendor /usr/bin/composer /usr/bin/ncomposer
 COPY --chown=www-data:www-data --from=vendor /var/app/vendor /var/app/vendor
 COPY --chown=www-data:www-data . /var/app/
+# Copy assets from frontend stage
+# COPY --chown=www-data:www-data --from=builder /var/www/app/public/build /var/www/app/public/build
+
 # Remove on production
 RUN mv .env.example .env
 # Expose sshd port if enabled (Port 2222)

@@ -19,9 +19,14 @@ echo -e '\033[0;32m' "      Use 'artisan' not 'php artisan'" '\033[0m'
 echo -e '\033[0;32m' "      ex. 'artisan optimize:clear'\n" '\033[0m'
 
 if [ "$ENABLE_CRON" = true ]; then
-echo -e '\033[0;31m' "   Cron/Queue Status:"'\033[0;32m' "Enabled\n" '\033[0m'
+echo -e '\033[0;31m' "   Cron/Queue Status:"'\033[0;32m' "Enabled" '\033[0m'
 else
-echo -e '\033[0;31m' "   Cron/Queue Status:"'\033[0;33m' "Disabled\n" '\033[0m'
+echo -e '\033[0;31m' "   Cron/Queue Status:"'\033[0;33m' "Disabled" '\033[0m'
 fi
-
+if [ "$INSTALL_NODE" = true ]; then
+echo -e '\033[0;31m' "   Node Installed:"'\033[0;32m' "TRUE" '\033[0m'
+else
+echo -e '\033[0;31m' "   Node Installed:"'\033[0;33m' "FALSE" '\033[0m'
+fi
+echo -e "\n"
 echo -e '\033[0;34m'"Make sure you Docker BUILD_KIT is enabled for the best pipeline build pereformance\n"'\033[0m'
