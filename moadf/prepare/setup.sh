@@ -3,7 +3,10 @@
 # Customize start directory and others misc.
 echo "" > /etc/motd
 echo "cd /var/app" >> /etc/profile
-echo "bash /etc/init.sh" >> /etc/profile
+# Add some env vars
+echo "export ENABLE_CRON=$ENABLE_CRON" >> /etc/profile
+echo "export INSTALL_NODE=$INSTALL_NODE" >> /etc/profile
+echo "bash /prepare/init.sh" >> /etc/profile
 
 # Copy sshd_config file and enable sshd service
 mv /prepare/ssh_config/sshd_config /etc/ssh/sshd_config
@@ -59,7 +62,3 @@ mkdir -p /var/app/storage/app
 chgrp -R 33 /var/app/storage
 chmod -R ug+rwx /var/app/storage
 chmod -R 777 /var/app/storage
-
-# Add some env vars
-echo "export ENABLE_CRON=$ENABLE_CRON" >> /etc/profile
-echo "export INSTALL_NODE=$INSTALL_NODE" >> /etc/profile
