@@ -49,7 +49,7 @@ fi
 # Install node according to env args
 if [ $INSTALL_NODE = true ]; then
 curl -fsSL https://fnm.vercel.app/install | bash
-fnm use --install-if-missing $INSTALL_NODE_VERSION
+fnm install $INSTALL_NODE_VERSION
 fi
 
 install_clean nginx nginx-extras default-mysql-client git

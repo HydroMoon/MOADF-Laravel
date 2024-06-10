@@ -8,6 +8,3 @@ node_modules
 Dockerfile
 docker-compose.yml
 Dockerfile.laravel
-storage/app
-storage/debugbar/
-storage/framework/*
