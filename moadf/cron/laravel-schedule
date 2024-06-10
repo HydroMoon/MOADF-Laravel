@@ -1,2 +1,0 @@
-# define user who will run th command
-* * * * * www-data /usr/local/bin/php /var/app/artisan schedule:run --verbose --no-interaction >> /proc/self/fd/2 2>&1

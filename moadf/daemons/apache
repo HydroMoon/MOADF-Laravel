@@ -1,3 +1,0 @@
-#!/bin/sh
-sv start php || exit 1
-exec /usr/sbin/apache2ctl -D FOREGROUND

@@ -3,6 +3,7 @@ ARG VERSION=${PHP_VERSION}
 
 FROM hydromoon/laravel-base:${VERSION} as vendor
 ENV COMPOSER_VER=${COMPOSER_VERSION}
+
 ## Stage 1
 RUN mkdir -p /var/app
 WORKDIR /var/app
@@ -16,31 +17,24 @@ RUN COMPOSER_MEMORY_LIMIT=-1 composer install \
     --no-plugins \
     --no-scripts \
     --prefer-dist
-
 # Stage 1 finished
 
 FROM hydromoon/laravel-base:${VERSION} as main
 # Choose which webserver you want (nginx | apache) default is nginx
 ARG WEB_SERVER=${WEB_SERVER}
+ARG INSTALL_NODE=true
+ARG INSTALL_NODE_VERSION=18
+ARG ENABLE_CRON=true
 
 # Prepare webserver configurations & Daemonized apps (nginx & php-fpm & laravel queue)
 COPY moadf/prepare /prepare/
 COPY moadf/daemons /daemons/
-
 RUN chmod +x /prepare/setup.sh && /prepare/setup.sh && rm /prepare/setup.sh
 
 # Adding startup script
 RUN mkdir -p /etc/my_init.d
 COPY moadf/startup/ /etc/my_init.d/
 RUN chmod +x /etc/my_init.d/*.sh
-
-# Adding cron jobs
-COPY moadf/cron/ /etc/cron.d/
-
-# Enabling ssh and adding out key
-# RUN rm -f /etc/service/sshd/down
-# COPY ssh/my_key.pub /tmp/my_key.pub
-# RUN cat /tmp/my_key.pub >> /root/.ssh/authorized_keys && rm -f /tmp/my_key.pub
 
 FROM main as final
 

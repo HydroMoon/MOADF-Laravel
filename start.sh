@@ -88,10 +88,10 @@ case $webserver in
     webserver="nginx"
     ;;
 
-  2)
-    echo -e "You selected: Apache"
-    webserver="apache"
-    ;;
+  # 2)
+  #   echo -e "You selected: Apache"
+  #   webserver="apache"
+  #   ;;
 
   *)
     webserverchoice

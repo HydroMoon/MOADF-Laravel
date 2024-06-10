@@ -1,18 +1,22 @@
 #!/bin/sh
 
-# Copy sshd_config file
+# Customize start directory and others misc.
+echo "" > /etc/motd
+echo "cd /var/app" >> /etc/profile
+echo "bash /etc/init.sh" >> /etc/profile
+
+# Copy sshd_config file and enable sshd service
 mv /prepare/ssh_config/sshd_config /etc/ssh/sshd_config
+rm -f /etc/service/sshd/down
 
 # Preparing daemonized apps
-mkdir /etc/service/${WEB_SERVER} \
+mkdir /etc/service/nginx \
     /etc/service/php \
-    /etc/service/laravel \
     /etc/service/startup
 
 # Copy needed file to run the daemons
-cp /daemons/${WEB_SERVER} /etc/service/${WEB_SERVER}/run
+cp /daemons/nginx /etc/service/nginx/run
 cp /daemons/php /etc/service/php/run
-cp /daemons/laravel /etc/service/laravel/run
 cp /daemons/startup /etc/service/startup/run
 
 # Make them executables
@@ -24,22 +28,31 @@ mv /prepare/composer.sh /usr/local/bin/composer
 chmod +x /usr/local/bin/artisan /usr/local/bin/composer
 
 # Copy php config files & php fpm pool setting if needed
-mv /prepare/php/php.config.ini /usr/local/etc/php/conf.d/php.config.ini
-mv /prepare/php/php.pool.conf /usr/local/etc/php-fpm.d/z-php.pool.conf
+mv /prepare/php/php.config.ini /usr/local/etc/php/conf.d/custom.ini
+mv /prepare/php/php.pool.conf /usr/local/etc/php-fpm.d/www.conf
+mv /prepare/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
-# Prepare web server config according to build args
-if [ $WEB_SERVER = "nginx" ]; then
-install_clean nginx
-cp /prepare/default.nginx.prod.conf /etc/nginx/sites-enabled/default
-else
-install_clean apache2
-echo "ServerName localhost" >> /etc/apache2/apache2.conf
-echo "Mutex posixsem" >> /etc/apache2/apache2.conf
-cp /prepare/default.apache.prod.conf /etc/apache2/sites-enabled/000-default.conf
-a2enmod actions
-a2enmod rewrite
-a2enmod proxy_fcgi
+# Setup cron and queue according to env args
+if [ $ENABLE_CRON = true ]; then
+# Create cron log
+touch /var/log/cron.log
+mkdir /etc/service/laravel
+cp /daemons/laravel /etc/service/laravel/run
+chmod +x /etc/service/laravel/run
+mv /prepare/cron/laravel-schedule /etc/cron.d/laravel-schedule
+crontab /etc/cron.d/laravel-schedule
 fi
+
+# Install node according to env args
+if [ $INSTALL_NODE = true ]; then
+curl -fsSL https://fnm.vercel.app/install | bash
+fnm use --install-if-missing $INSTALL_NODE_VERSION
+fi
+
+install_clean nginx nginx-extras default-mysql-client git
+git config --global --add safe.directory /var/app
+cp /prepare/default.nginx.prod.conf /etc/nginx/sites-enabled/default
+cp /prepare/default.nginx.conf /etc/nginx/nginx.conf
 
 mkdir -p /var/app/storage/logs
 mkdir -p /var/app/storage/app
