@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Add ssh password
+echo 'root:Docker!' | chpasswd
+
 # Customize start directory and others misc.
 echo "" > /etc/motd
 echo "cd /var/app" >> /etc/profile
